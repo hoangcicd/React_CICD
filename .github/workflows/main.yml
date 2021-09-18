@@ -28,6 +28,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install package
         run: npm install
       - name: Build 
@@ -39,9 +45,4 @@ jobs:
           path: ./build
       - name: test
         run: npm test
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      
